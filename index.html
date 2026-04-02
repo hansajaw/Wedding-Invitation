@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thilanka & Chirani — Wedding Invitation</title>
+  <meta name="description" content="You are warmly invited to celebrate the wedding of Hansaja & Partner on 10th June 2026." />
+  <meta property="og:title"       content="Hansaja & Partner — Wedding Invitation" />
+  <meta property="og:description" content="Join us on the most beautiful day of our lives." />
+  <meta property="og:type"        content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Music Button -->
+  <button id="music-btn" title="Toggle ambient music" aria-label="Toggle ambient music">♪</button>
+
+  <!-- ── Loading Screen ── -->
+  <div id="loader" role="status" aria-label="Loading invitation">
+    <div class="loader-monogram">T&amp;C</div>
+    <div class="loader-line"></div>
+    <div class="loader-text">Loading your invitation</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section id="hero" aria-label="Welcome">
+    <div class="hero-bg"></div>
+
+    <!-- Corner SVG ornaments -->
+    <svg class="ornament ornament-tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 98 L2 2 L98 2" stroke="#c9a96e" stroke-width="1"/>
+      <path d="M2 2 Q 50 2 50 50 Q 50 2 98 2" stroke="#c9a96e" stroke-width="0.5" fill="none" opacity="0.5"/>
+      <circle cx="2" cy="2"  r="3" fill="#c9a96e"/>
+      <circle cx="98" cy="2" r="2" fill="#c9a96e" opacity="0.5"/>
+      <circle cx="2" cy="98" r="2" fill="#c9a96e" opacity="0.5"/>
+      <path d="M20 2 Q 20 20 2 20" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
+    </svg>
+    <svg class="ornament ornament-tr" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 98 L2 2 L98 2" stroke="#c9a96e" stroke-width="1"/>
+      <circle cx="2" cy="2"  r="3" fill="#c9a96e"/>
+      <circle cx="98" cy="2" r="2" fill="#c9a96e" opacity="0.5"/>
+      <circle cx="2" cy="98" r="2" fill="#c9a96e" opacity="0.5"/>
+      <path d="M20 2 Q 20 20 2 20" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
+    </svg>
+    <svg class="ornament ornament-bl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 98 L2 2 L98 2" stroke="#c9a96e" stroke-width="1"/>
+      <circle cx="2" cy="2"  r="3" fill="#c9a96e"/>
+      <circle cx="98" cy="2" r="2" fill="#c9a96e" opacity="0.5"/>
+      <circle cx="2" cy="98" r="2" fill="#c9a96e" opacity="0.5"/>
+      <path d="M20 2 Q 20 20 2 20" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
+    </svg>
+    <svg class="ornament ornament-br" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 98 L2 2 L98 2" stroke="#c9a96e" stroke-width="1"/>
+      <circle cx="2" cy="2"  r="3" fill="#c9a96e"/>
+      <circle cx="98" cy="2" r="2" fill="#c9a96e" opacity="0.5"/>
+      <circle cx="2" cy="98" r="2" fill="#c9a96e" opacity="0.5"/>
+      <path d="M20 2 Q 20 20 2 20" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
+    </svg>
+
+    <div class="hero-inner">
+      <p class="tag">Together with their families</p>
+
+      <h1 class="names">
+        Thilanka
+        <span class="amp">&amp;</span>
+        Chirani
+      </h1>
+
+      <div class="hero-divider">
+        <span></span>
+        <span class="diamond"></span>
+        <span></span>
+      </div>
+
+      <p class="hero-date">13<sup>th</sup> August 2026</p>
+      <p class="hero-sub">Request the honour of your presence</p>
+    </div>
+
+    <div class="scroll-hint" id="scroll-hint" role="button" tabindex="0" aria-label="Scroll down">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       OUR STORY
+  ════════════════════════════════════════ -->
+  <section id="story" aria-labelledby="story-title">
+    <div class="story-text">
+      <span class="section-eyebrow reveal">Our Story</span>
+      <h2 class="section-title reveal" id="story-title">
+        A love written<br><em>in the stars</em>
+      </h2>
+      <p class="reveal" style="transition-delay:0.1s">
+        What began as an ordinary afternoon turned into the most extraordinary chapter of our lives. 
+        From stolen glances to shared laughter, every moment brought us closer to this beautiful destination.
+      </p>
+      <p class="reveal" style="transition-delay:0.2s">
+        We have walked together through seasons of joy and seasons of growth, and now we stand 
+        at the threshold of forever — grateful, joyful, and ready to begin.
+      </p>
+      <p class="reveal" style="transition-delay:0.3s">
+        We would be deeply honoured to share this milestone with you, surrounded by the people 
+        who have shaped our journey and filled our hearts with warmth.
+      </p>
+    </div>
+
+    <div class="story-visual reveal-right">
+      <div class="story-frame">
+        <div class="story-accent"></div>
+        <div class="story-monogram">T&amp;C</div>
+        <p class="story-caption">Est. 2024</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornamental-divider reveal">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+  <section id="parents-section" aria-labelledby="parents-title">
+    <div class="parents-container">
+      
+      <div class="person-card reveal-left">
+        <div class="parent-info">
+          <span class="relation-tag">Beloved Daughter of</span>
+          <p class="parent-names">Mr. Ranaweera Jayalath <br> &<br>Mrs. Daya Manchanayaka</p>
+        </div>
+        <div class="individual-name-frame">
+          <h2 class="script-name">Chirani</h2>
+        </div>
+      </div>
+
+      <div class="ampersand-divider reveal" data-delay="300">
+        <span>&</span>
+      </div>
+
+      <div class="person-card reveal-right">
+        <div class="parent-info">
+          <span class="relation-tag">Beloved Son of</span>
+          <p class="parent-names">Mr. Erik Thilakarathne <br>&<br>Mrs. Priyanthi Rathnayaka</p>
+        </div>
+        <div class="individual-name-frame">
+          <h2 class="script-name">Thilanka</h2>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       WEDDING DETAILS
+  ════════════════════════════════════════ -->
+  <div id="details" aria-labelledby="details-title">
+    <span class="section-eyebrow reveal">Mark Your Calendar</span>
+    <h2 class="section-title reveal" id="details-title">
+      Wedding <em>Details</em>
+    </h2>
+
+    <div class="details-grid" role="list">
+      <div class="detail-card reveal" role="listitem">
+        <span class="detail-icon">🌹</span>
+        <span class="detail-label">Date</span>
+        <p class="detail-value">13<sup>th</sup> August<br>2026</p>
+        <p class="detail-sub">Thursday</p>
+      </div>
+      <div class="detail-card reveal" role="listitem" style="transition-delay:0.15s">
+        <span class="detail-icon">🕙</span>
+        <span class="detail-label">Ceremony</span>
+        <p class="detail-value">10:30 AM - 4:00 PM</p>
+        <p class="detail-sub">Poruwa Ceremony at 10:13 PM</p>
+      </div>
+      <div class="detail-card reveal" role="listitem" style="transition-delay:0.3s">
+        <span class="detail-icon">🏛️</span>
+        <span class="detail-label">Venue</span>
+        <p class="detail-value">The Deer Park<br>Hotel</p>
+        <p class="detail-sub">Girithale, Sri Lanka</p>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       COUNTDOWN
+  ════════════════════════════════════════ -->
+  <div id="countdown-section" aria-label="Countdown to wedding">
+    <span class="section-eyebrow reveal">Counting Down</span>
+    <h2 class="section-title reveal">The Big Day<br><em>is almost here</em></h2>
+
+    <div class="countdown-wrap" role="timer" aria-live="polite">
+      <div class="count-unit">
+        <span class="count-num" id="count-days">--</span>
+        <span class="count-label">Days</span>
+      </div>
+      <span class="count-sep" aria-hidden="true">:</span>
+      <div class="count-unit">
+        <span class="count-num" id="count-hours">--</span>
+        <span class="count-label">Hours</span>
+      </div>
+      <span class="count-sep" aria-hidden="true">:</span>
+      <div class="count-unit">
+        <span class="count-num" id="count-mins">--</span>
+        <span class="count-label">Minutes</span>
+      </div>
+      <span class="count-sep" aria-hidden="true">:</span>
+      <div class="count-unit">
+        <span class="count-num" id="count-secs">--</span>
+        <span class="count-label">Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       LOCATION
+  ════════════════════════════════════════ -->
+  <section id="location" aria-labelledby="location-title">
+    <span class="section-eyebrow reveal">Getting There</span>
+    <h2 class="section-title reveal" id="location-title">
+      The <em>Venue</em>
+    </h2>
+
+    <div class="map-placeholder reveal">
+      <span class="map-icon">📍</span>
+      <p class="map-name">The Deer Park Hotel</p>
+      <p class="map-address">Elahera - Giritale Rd, Girithale, Polonnaruwa, Srilanka.</p>
+    </div>
+
+    <button id="map-btn" class="btn-map reveal" aria-label="Open venue in Google Maps">
+      <span>📍</span> Open in Maps
+    </button>
+
+    <p class="reveal" style="margin-top:32px;font-size:13px;color:#9a8070;line-height:1.8;">
+      Complimentary parking is available at the venue.<br>
+      Shuttle service from The Deer Park Hotel from 9:00 AM.
+    </p>
+  </section>
+
+  <div class="ornamental-divider reveal">❧ &nbsp; ❧ &nbsp; ❧</div>
+
+  <!-- ═══════════════════════════════════════
+       RSVP
+  ════════════════════════════════════════ -->
+  <section id="rsvp" aria-labelledby="rsvp-title">
+    <span class="section-eyebrow reveal">Kindly Reply</span>
+    <h2 class="section-title reveal" id="rsvp-title">
+      Will You <em>Join Us?</em>
+    </h2>
+    <p class="reveal" style="font-size:14px;color:#9a8070;margin-bottom:40px;line-height:1.8;">
+      Please RSVP by <strong style="color:#c9a96e">1st July 2026</strong> so we can ensure 
+      a perfect celebration for everyone.
+    </p>
+
+    <form id="rsvp-form" class="reveal" novalidate aria-label="RSVP Form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="fname" placeholder="Amara" required />
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lname" placeholder="Perera" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="attendance">Attendance</label>
+          <select id="attendance" name="attendance" required>
+            <option value="" disabled selected>Please select…</option>
+            <option value="yes">Joyfully accepts</option>
+            <option value="no">Regretfully declines</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="guests">No. of Guests</label>
+          <select id="guests" name="guests">
+            <option value="1">1 — Just me</option>
+            <option value="2">2 — Myself &amp; partner</option>
+            <option value="3">3</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dietary">Message</label>
+        <textarea id="dietary" name="dietary" placeholder="A note for the couple…"></textarea>
+      </div>
+      <div style="text-align:center;margin-top:8px;">
+        <button type="submit" class="btn-rsvp"><span>Send RSVP</span></button>
+      </div>
+    </form>
+
+    <div id="rsvp-success" class="rsvp-success" role="alert">
+      <div class="check">💌</div>
+      <p>Thank you! We cannot wait to celebrate with you.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-monogram">T &amp; C</div>
+    <p class="footer-verse">
+      "And now these three remain: faith, hope and love.<br>
+      But the greatest of these is love."
+    </p>
+    <small>The Deer Park Hotel &nbsp;·&nbsp; 13 August 2026</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
