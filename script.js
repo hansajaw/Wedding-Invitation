@@ -213,57 +213,61 @@ document.getElementById('map-btn')?.addEventListener('click', () => {
   window.open('https://maps.app.goo.gl/iQBjtmKNrXyNw6HV6', '_blank'); // Update with actual venue link
 });
 
-// ── 9. Music Toggle (Web Audio API) ──────────────────
 // ── 9. Music Toggle (MP3 Song) ──────────────────
 const musicBtn = document.getElementById('music-btn');
 const weddingSong = new Audio('Music/song.mp3'); 
 weddingSong.loop = true; 
-weddingSong.volume = 0; // Start at 0 for the fade-in effect
+weddingSong.volume = 0; 
 
 let playing = false;
 let fadeInterval;
 
 function fadeMusic(targetVolume, duration, callback) {
   clearInterval(fadeInterval);
-  const step = 0.05;
-  const intervalTime = duration / (targetVolume / step || 10);
   
+  // Calculate how often to change the volume (every 50ms)
+  const steps = duration / 50;
+  const volumeStep = (targetVolume - weddingSong.volume) / steps;
+
   fadeInterval = setInterval(() => {
-    if (targetVolume > weddingSong.volume) {
-      // Fading In
-      weddingSong.volume = Math.min(weddingSong.volume + step, targetVolume);
-      if (weddingSong.volume >= targetVolume) {
-        clearInterval(fadeInterval);
-        if (callback) callback();
-      }
+    let nextVolume = weddingSong.volume + volumeStep;
+
+    // Check if we reached or passed the target
+    if ((volumeStep > 0 && nextVolume >= targetVolume) || 
+        (volumeStep < 0 && nextVolume <= targetVolume)) {
+      weddingSong.volume = targetVolume;
+      clearInterval(fadeInterval);
+      if (callback) callback();
     } else {
-      // Fading Out
-      weddingSong.volume = Math.max(weddingSong.volume - step, 0);
-      if (weddingSong.volume <= 0) {
-        clearInterval(fadeInterval);
-        if (callback) callback();
-      }
+      weddingSong.volume = nextVolume;
     }
   }, 50);
 }
 
 musicBtn?.addEventListener('click', () => {
   if (!playing) {
-    // Play and Fade In
-    weddingSong.play().catch(err => console.log("Playback blocked by browser."));
-    fadeMusic(0.5, 2000); // Fade to 50% volume over 2 seconds
+    // 1. Set State
+    playing = true;
     
+    // 2. Visual Update
     musicBtn.textContent = '♫';
     musicBtn.classList.add('playing');
-    playing = true;
+
+    // 3. Audio Logic
+    weddingSong.play().catch(err => console.log("Playback blocked."));
+    fadeMusic(0.5, 2000); // Fade up to 50%
+    
   } else {
-    // Fade Out and then Pause
+    // 1. Set State
+    playing = false;
+    
+    // 2. Visual Update (Instant feedback)
+    musicBtn.textContent = '♪';
+    musicBtn.classList.remove('playing');
+
+    // 3. Audio Logic (Fade out then pause)
     fadeMusic(0, 1000, () => {
       weddingSong.pause();
     });
-    
-    musicBtn.textContent = '♪';
-    musicBtn.classList.remove('playing');
-    playing = false;
   }
 });
