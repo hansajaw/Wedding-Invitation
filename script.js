@@ -10,6 +10,16 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     const loader = document.getElementById('loader');
     if (loader) loader.classList.add('hidden');
+
+    // Auto-play music after page loads
+    weddingSong.play().then(() => {
+      playing = true;
+      musicBtn.textContent = '♫';
+      musicBtn.classList.add('playing');
+      fadeMusic(0.5, 2000);
+    }).catch(() => {
+      // Browser blocked autoplay — user must click the music button instead
+    });
   }, 2400);
 });
 
@@ -213,61 +223,74 @@ document.getElementById('map-btn')?.addEventListener('click', () => {
   window.open('https://maps.app.goo.gl/iQBjtmKNrXyNw6HV6', '_blank'); // Update with actual venue link
 });
 
-// ── 9. Music Toggle (MP3 Song) ──────────────────
+// ── 9. Music Toggle (MP3 Song with Reliable Fade) ──────────────────
 const musicBtn = document.getElementById('music-btn');
 const weddingSong = new Audio('Music/song.mp3'); 
 weddingSong.loop = true; 
+weddingSong.preload = 'auto'; // Helps mobile start the song faster
 weddingSong.volume = 0; 
 
 let playing = false;
 let fadeInterval;
 
+/**
+ * Robust Fade Function
+ * @param {number} targetVolume - Volume to reach (0 to 1)
+ * @param {number} duration - Time in ms
+ * @param {function} callback - Function to run after fade finishes
+ */
 function fadeMusic(targetVolume, duration, callback) {
   clearInterval(fadeInterval);
   
-  // Calculate how often to change the volume (every 50ms)
-  const steps = duration / 50;
+  const stepTime = 50; // Update every 50ms
+  const steps = duration / stepTime;
   const volumeStep = (targetVolume - weddingSong.volume) / steps;
 
   fadeInterval = setInterval(() => {
     let nextVolume = weddingSong.volume + volumeStep;
 
-    // Check if we reached or passed the target
+    // Boundary checks to ensure we don't go past target or out of [0, 1] range
     if ((volumeStep > 0 && nextVolume >= targetVolume) || 
         (volumeStep < 0 && nextVolume <= targetVolume)) {
-      weddingSong.volume = targetVolume;
+      
+      weddingSong.volume = Math.max(0, Math.min(1, targetVolume));
       clearInterval(fadeInterval);
       if (callback) callback();
     } else {
-      weddingSong.volume = nextVolume;
+      // Ensure volume stays within valid Audio object limits
+      weddingSong.volume = Math.max(0, Math.min(1, nextVolume));
     }
-  }, 50);
+  }, stepTime);
 }
 
 musicBtn?.addEventListener('click', () => {
   if (!playing) {
-    // 1. Set State
     playing = true;
     
-    // 2. Visual Update
+    // UI Feedback
     musicBtn.textContent = '♫';
     musicBtn.classList.add('playing');
 
-    // 3. Audio Logic
-    weddingSong.play().catch(err => console.log("Playback blocked."));
-    fadeMusic(0.5, 2000); // Fade up to 50%
+    // Start Audio
+    weddingSong.play().then(() => {
+      fadeMusic(0.5, 2000); // Fade up to 50% over 2 seconds
+    }).catch(err => {
+      console.warn("Playback blocked by browser policy. Interaction required.");
+      playing = false; // Reset state if blocked
+    });
     
   } else {
-    // 1. Set State
     playing = false;
     
-    // 2. Visual Update (Instant feedback)
+    // UI Feedback (Instant)
     musicBtn.textContent = '♪';
     musicBtn.classList.remove('playing');
 
-    // 3. Audio Logic (Fade out then pause)
+    // Audio Logic: Fade out then pause
     fadeMusic(0, 1000, () => {
       weddingSong.pause();
+      // Ensure it stays at 0 for the next fade-in
+      weddingSong.volume = 0; 
     });
   }
 });
