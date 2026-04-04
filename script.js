@@ -2,23 +2,52 @@
    Wedding Invitation — script.js (Final Updated)
    =================================================== */
 
-// ── 1. Configuration & Loader ──────────────────────────
-// Updated to match the date in your HTML (August 10, 2026)
+// ── 1. Configuration ───────────────────────────────────
 const weddingDate = new Date("2026-08-13T10:00:00").getTime();
 
+// ── 9. Music — declared HERE at the top so loader can access it ──
+const musicBtn = document.getElementById('music-btn');
+const weddingSong = new Audio('Music/song.mp3');
+weddingSong.loop = true;
+weddingSong.preload = 'auto';
+weddingSong.volume = 0;
+
+let playing = false;
+let fadeInterval;
+
+function fadeMusic(targetVolume, duration, callback) {
+  clearInterval(fadeInterval);
+  const stepTime = 50;
+  const steps = duration / stepTime;
+  const volumeStep = (targetVolume - weddingSong.volume) / steps;
+
+  fadeInterval = setInterval(() => {
+    let nextVolume = weddingSong.volume + volumeStep;
+    if ((volumeStep > 0 && nextVolume >= targetVolume) ||
+        (volumeStep < 0 && nextVolume <= targetVolume)) {
+      weddingSong.volume = Math.max(0, Math.min(1, targetVolume));
+      clearInterval(fadeInterval);
+      if (callback) callback();
+    } else {
+      weddingSong.volume = Math.max(0, Math.min(1, nextVolume));
+    }
+  }, stepTime);
+}
+
+// ── Loader & Auto-play ────────────────────────────────
 window.addEventListener('load', () => {
   setTimeout(() => {
     const loader = document.getElementById('loader');
     if (loader) loader.classList.add('hidden');
 
-    // Auto-play music after page loads
+    // Auto-play music after loader hides
     weddingSong.play().then(() => {
       playing = true;
       musicBtn.textContent = '♫';
       musicBtn.classList.add('playing');
       fadeMusic(0.5, 2000);
     }).catch(() => {
-      // Browser blocked autoplay — user must click the music button instead
+      // Browser blocked autoplay — music button still works manually
     });
   }, 2400);
 });
@@ -223,46 +252,7 @@ document.getElementById('map-btn')?.addEventListener('click', () => {
   window.open('https://maps.app.goo.gl/iQBjtmKNrXyNw6HV6', '_blank'); // Update with actual venue link
 });
 
-// ── 9. Music Toggle (MP3 Song with Reliable Fade) ──────────────────
-const musicBtn = document.getElementById('music-btn');
-const weddingSong = new Audio('Music/song.mp3'); 
-weddingSong.loop = true; 
-weddingSong.preload = 'auto'; // Helps mobile start the song faster
-weddingSong.volume = 0; 
-
-let playing = false;
-let fadeInterval;
-
-/**
- * Robust Fade Function
- * @param {number} targetVolume - Volume to reach (0 to 1)
- * @param {number} duration - Time in ms
- * @param {function} callback - Function to run after fade finishes
- */
-function fadeMusic(targetVolume, duration, callback) {
-  clearInterval(fadeInterval);
-  
-  const stepTime = 50; // Update every 50ms
-  const steps = duration / stepTime;
-  const volumeStep = (targetVolume - weddingSong.volume) / steps;
-
-  fadeInterval = setInterval(() => {
-    let nextVolume = weddingSong.volume + volumeStep;
-
-    // Boundary checks to ensure we don't go past target or out of [0, 1] range
-    if ((volumeStep > 0 && nextVolume >= targetVolume) || 
-        (volumeStep < 0 && nextVolume <= targetVolume)) {
-      
-      weddingSong.volume = Math.max(0, Math.min(1, targetVolume));
-      clearInterval(fadeInterval);
-      if (callback) callback();
-    } else {
-      // Ensure volume stays within valid Audio object limits
-      weddingSong.volume = Math.max(0, Math.min(1, nextVolume));
-    }
-  }, stepTime);
-}
-
+// ── Music Button Toggle ───────────────────────────────
 musicBtn?.addEventListener('click', () => {
   if (!playing) {
     playing = true;
