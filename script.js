@@ -208,30 +208,60 @@ document.querySelectorAll('.count-num').forEach(el => {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ── 7. RSVP Form ─────────────────────────────────────────
+// ── 7. RSVP Form (Fixed to actually send data) ──────────
 const rsvpForm = document.getElementById('rsvp-form');
+const successMsg = document.getElementById('rsvp-success');
+
 if (rsvpForm) {
-  rsvpForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+  rsvpForm.addEventListener('submit', async function(e) {
+    e.preventDefault(); // Stop page reload
+    
     const btn = this.querySelector('.btn-rsvp');
+    const originalText = btn.querySelector('span').textContent;
+    
+    // UI Feedback: Show sending state
     btn.querySelector('span').textContent = 'Sending…';
     btn.style.pointerEvents = 'none';
 
-    setTimeout(() => {
-      this.style.opacity = '0';
-      this.style.transform = 'translateY(10px)';
-      this.style.transition = 'all 0.4s ease';
+    // Get the form data
+    const data = new FormData(this);
 
-      setTimeout(() => {
-        this.style.display = 'none';
-        const success = document.getElementById('rsvp-success');
-        success.classList.add('show');
-        success.style.display = 'block';
-        
-        // Burst of petals on success
-        for (let i = 0; i < 30; i++) setTimeout(createPetal, i * 80);
-      }, 400);
-    }, 1400);
+    try {
+      // Actually send the data to Formspree
+      const response = await fetch(this.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // SUCCESS: Hide form and show success message
+        this.style.opacity = '0';
+        this.style.transform = 'translateY(10px)';
+        this.style.transition = 'all 0.4s ease';
+
+        setTimeout(() => {
+          this.style.display = 'none';
+          successMsg.classList.add('show');
+          successMsg.style.display = 'block';
+          
+          // Burst of petals on success
+          for (let i = 0; i < 30; i++) setTimeout(createPetal, i * 80);
+        }, 400);
+      } else {
+        // ERROR: Handle server errors (e.g., wrong ID)
+        alert("Oops! There was a problem submitting your RSVP. Please try again.");
+        btn.querySelector('span').textContent = originalText;
+        btn.style.pointerEvents = 'auto';
+      }
+    } catch (error) {
+      // ERROR: Handle network errors
+      alert("Could not connect to the server. Please check your internet.");
+      btn.querySelector('span').textContent = originalText;
+      btn.style.pointerEvents = 'auto';
+    }
   });
 }
 
